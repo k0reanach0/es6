@@ -510,7 +510,7 @@ Boolean(isChamp) // true
 
 Array destructuring is terrific at extracting value from your arguments. The first thing we're doing is spreading our arguments, so you can get an array. Next we're assigning them to our variables using array destructuring. So the next time you see the array bracket notation. Swap them out and use the array destructuring syntax instead
 ```js
-Happy Father\'s Day
+// Happy Father's Day
 function sendLove(...args) {
   // Old way
   const hug = args[0];
