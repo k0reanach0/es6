@@ -692,6 +692,234 @@ reverseString("hello")
 // returns "olleh"
 ```
 
+```js
+// Destructuring
+
+const turtle = {
+  name: 'Bob',
+  legs: 4,
+  shell: true,
+  type: 'amphibious',
+  meal: 10,
+  diet: 'berries'
+}
+
+// Bad code
+// Notice repeating `animal` several times
+function feed(animal) {
+  return `Feed ${animal.name} ${animal.meal} kilos of ${animal.diet}`
+}
+
+// Good code
+// Object destructuring
+function feed({ name, meal, diet }) {
+  return `Feed ${name} ${meal} kilos of ${diet}`
+}
+
+// OR
+function feed(animal) {
+  const { name, meal, diet } = animal
+  return `Feed ${name} ${meal} kilos of ${diet}`
+}
+
+const horse = {
+  name: 'Topher',
+  size: 'large',
+  skills: ['jousting', 'racing'],
+  age: 7
+}
+
+const { name, size, skills } = horse
+bio = `${name} is a ${size} skilled in ${skills.join(' & ')}
+
+console.log(bio)
+```
+
+```js
+// Advanced Tag Example
+function horseArge(str, age) {
+  const ageStr = age > 5 ? 'old' : 'young'
+  return `${str[0]}${ageStr} at ${age} years`
+}
+
+const bio = horseAge`This horse is ${horse.age}`
+```
+
+```js
+// Objects & Spread syntax
+const pikachu = { name: 'Pikachu' }
+const stats = { hp: 40, attack: 60, defense: 45 }
+
+// Bad Object Code
+pikachu['hp'] = stats.hp
+pikachu['attack'] = stats.attack
+pikachu['defense'] = stats.defense
+
+// OR
+
+const lvl0 = Object.assign(pikachu, stats)
+const lvl1 = Object.assign(pikachu, { hp: 45 })
+
+// Good Object Code
+const lvl0 = { ...pikachu, ...stats }
+const lvl1 = { ...pikachu, hp: 45 }
+
+// Arrays
+let pokemon = ['Arbok', 'Raichu', 'Sandshrew']
+
+// Bad Array Code
+pokemon.push('Bulbasaur')
+pokemon.push('Metapod')
+pokemon.push('Weedle')
+
+// Good Array Code
+pokemon = [...pokemon, 'Bulbasaur', 'Metapod', 'Weedle']
+
+// Unshift
+pokemon = ['Bulbasaur', 'Metapod', 'Weedle', ...pokemon]
+
+pokemon = ['Bulbasaur', ...pokemon, 'Metapod', 'Weedle']
+```
+
+```js
+const orders = [500, 30, 99, 15, 223]
+
+// Bad Loop Code
+const total = 0
+const withTax = []
+const highValue = []
+for (i = 0; i < orders.length; i++) {
+  // Reduce
+  total += orders[i]
+
+  //Map
+  withTax.push(orders[i] * 1.1);
+
+  // Filter
+  if (orders[i] > 100) {
+    highValue.push(orders[i])
+  }
+}
+// Ugly and could be mutating values we may want to be immutable and unpredictable
+
+// Good Loop Code in 3 lines of code
+// Reduce
+const total = orders.reduce((acc, cur) => acc + cur)
+
+// Map
+const withTax = orders.map(v => v * 1.1)
+
+// Filter
+const highValue = orders.filter(v => v > 100)
+```
+
+```js
+const random = () => {
+  return Promise.resolve(Math.random())
+}
+
+// Bad Promise Code
+const sumRandomAsyncNums = () => {
+  let first;
+  let second;
+  let third;
+  
+    return random()
+    .then(v => {
+      first = v;
+      return random();
+    })
+    .then(v => {
+      second = v;
+      return random();
+    })
+    .then(v => {
+      third = v;
+      return first + second + third
+    })
+}
+
+// Good Promise Code
+const sumRandomAsyncNums = async() => {
+  const first = await random();
+  const second = await random();
+  const third = await random();
+
+  console.log(`Result ${first + second + third}`)
+}
+
+sumRandomAsyncNums()
+
+// Conditional async/await
+if (await random()) {
+
+}
+
+// Promise.all needs every promise to work. if one promise fails, the entire thing fails unexpectedly. beware
+const randos = Promise.all([
+  random(),
+  random(),
+  random()
+])
+
+for (const r of await) {
+
+}
+```
+
+```js
+function square() {
+  let example = () => {
+    let numbers = [];
+    for (let number of arguments) {
+      numbers.push(number * number);
+    }
+
+    return numbers;
+  };
+
+  return example();
+}
+
+square(2, 4, 7.5, 8, 11.5, 21); // returns: [4, 16, 56.25, 64, 132.25, 441]
+```
+
+### Destructuring
+
+Destructuring allows binding using pattern matching, with support for matching arrays and objects. 
+Destructuring is fail-soft, similar to standard object lookup `foo["bar"]`, producing undefined values when not found.
+```js
+// list matching
+var [a, ,b] = [1,2,3];
+a === 1;
+b === 3;
+
+// object matching
+var { op: a, lhs: { op: b }, rhs: c } = getASTNode()
+
+// object matching shorthand
+// binds `op`, `lhs` and `rhs` in scope
+var {op, lhs, rhs} = getASTNode()
+
+// Can be used in parameter position
+function g({name: x}) {
+  console.log(x);
+}
+g({name: 5})
+
+// Fail-soft destructuring
+var [a] = [];
+a === undefined;
+
+// Fail-soft destructuring with defaults
+var [a = 1] = [];
+a === 1;
+
+// Destructuring + defaults arguments
+function r({x, y, w = 10, h = 10}) {
+  return x + y + w + h;
+}
+r({x:1, y:2}) === 23
 
 
 
