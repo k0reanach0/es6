@@ -1552,6 +1552,121 @@ const fruitInspection = async() => {
 fruitInspection()
 ```
 
+### Use Cases for Destructuring
+
+There are many situations where destructuring comes in handy. Here’s some of the most common ones. Whenever you have a method that returns an object, destructuring makes it much terser to interact with.
+
+```js
+function getCoords () {
+  return {
+    x: 10,
+    y: 22
+  }
+}
+var {x, y} = getCoords()
+console.log(x)
+// <- 10
+console.log(y)
+// <- 22
+```
+
+A similar use case but in the opposite direction is being able to define default options when you have a method with a bunch of options that need default values. This is particularly interesting as an alternative to named parameters in other languages like Python and C#.
+
+```js
+function random ({ min=1, max=300 }) {
+  return Math.floor(Math.random() * (max - min)) + min
+}
+console.log(random({}))
+// <- 174
+console.log(random({max: 24}))
+// <- 18
+```
+
+A great fit for destructuring are things like regular expressions, where you would just love to name parameters without having to resort to index numbers. Here’s an example parsing a URL with a random RegExp I got on StackOverflow.
+
+```js
+function getUrlParts (url) {
+  var magic = /^(https?):\/\/(ponyfoo\.com)(\/articles\/([a-z0-9-]+))$/
+  return magic.exec(url)
+}
+var parts = getUrlParts('http://ponyfoo.com/articles/es6-destructuring-in-depth')
+var [,protocol,host,pathname,slug] = parts
+console.log(protocol)
+// <- 'http'
+console.log(host)
+// <- 'ponyfoo.com'
+console.log(pathname)
+// <- '/articles/es6-destructuring-in-depth'
+console.log(slug)
+// <- 'es6-destructuring-in-depth'
+```
+
+Let’s take a look at what problem JavaScript destructuring really solves. Sometimes you need top level variables like so:
+
+```js
+const person = {
+  first: 'Wes',
+  last: 'Bos',
+  country: 'Canada',
+  city: 'Hamilton',
+  twitter: '@wesbos'
+};
+const first = person.first;
+const last = person.last;
+```
+
+You get the point. You’ve got this pretty much repetitive code over and over again, where you need to make a variable from something that is inside of an object or inside of an array. What we could do instead of creating multiple variables, we destructure them in a single line like so:
+
+`const { first, last } = person;`
+
+Curly bracket on the left of the equals sign?! That is not a block. That is not an object. It’s the new destructuring syntax.
+
+The above code says, give me a variable called first, a variable called last, and take it from the person object. We’re taking the first property and the last property and putting them into two new variables that will be scoped to the parent block (or window!).
+
+```js
+console.log(first); // Wes
+console.log(last); // Bos
+```
+
+Similarly, if I also wanted twitter, I would just add twitter into that, and I would get a third top level variable inside of my actual scope `const { first, last, twitter } = person;`
+
+That’s really handy in many use cases. This is just one nested level, but for example, in React.js often you want to use destructuring because the data is so deeply nested in props or state.
+
+Let’s say we have some deeply nested data like we might get back from a JSON api:
+
+```js
+const wes = {
+  first: 'Wes',
+  last: 'Bos',
+  links: {
+    social: {
+      twitter: 'https://twitter.com/wesbos',
+      facebook: 'https://facebook.com/wesbos.developer',
+    },
+    web: {
+      blog: 'https://wesbos.com'
+    }
+  }
+};
+```
+
+I want to be able to pull out Twitter and Facebook URLs here. I could do this like it’s 1994 and we’re all running around with walkmans:
+
+```js
+const twitter = wes.links.social.twitter;
+const facebook = wes.links.social.facebook;
+// Annoying!
+```
+
+We can use destructuring to do it one better!
+
+```js
+const { twitter, facebook } = wes.links.social;
+console.log(twitter, facebook); // logs the 2 variables 
+```
+
+Notice how we destructure `wes.links.social` and not just `wes`? That is important because we are destructuring a few levels deep.
+
 
 
 
