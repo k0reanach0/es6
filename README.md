@@ -1456,8 +1456,101 @@ $("#btn").on("click", async () => {
 })
 ```
 
+```js
+const getFruit = async(name) => {
+  const fruits = {
+    pinapple: '🍍',
+    peach: '🍑',
+    strawberry: '🍓'
+  }
 
+  await delay(1000);
 
+  return fruits[name]
+}
+
+// Promise Chain
+const makeSmoothie = () => {
+  let a;
+  return getFruit('pineapple')
+    .then(v => {
+      v = a;
+      return getFruit('strawberry')
+    })
+    .then(v => [v, a])
+}
+
+// Async + Await
+const makeSmoothie = async() => {
+  const a = await getFruit('pineapple')
+  const b = await getFruit('strawberry')
+
+  return [a, b]
+}
+
+// This could be even simpler because you only need to await individually if B has to wait on A in order to move on.
+const makeSmoothie = async() => {
+  const a = await getFruit('pineapple')
+  const b = await getFruit('strawberry')
+  const smoothie = await Promise.all([a, b])
+  
+  return smoothie
+}
+
+makeSmoothie().then(log)
+
+const badSmoothie = async() => {
+  try {
+    const a = getFruit('pineapple')
+    const b = getFruit('strawberry')
+    const smoothie = await Promise.all([a, b])
+
+    throw 'broken!'
+
+    return smoothie;
+  } catch(err) {
+    console.log(err)
+    // Here you can return or throw in the catch block.. you can return and continue running but overriding the problem or throw and stop completely
+    // return `We are going to be fine...`
+    // throw `It's broken!`
+  }
+}
+```
+
+```js
+const fruits = ['peach', 'pineapple', 'strawberry']
+
+// 500 ms lookup of each fruit
+const fruitLoop = async() => {
+  for (const f of fruits) {
+    const emoji = await getFruit(f)
+    log(emoji)
+  }
+}
+
+fruitLoop();
+
+// less than 10ms lookup per fruit
+const smoothie = fruits.map(v => getFruit(v))
+
+const fruitLoop = async() => {
+  for await(const emoji of smoothie) {
+    log(emoji)
+  }
+}
+
+fruitLoop()
+```
+
+```js
+const fruitInspection = async() => {
+  if (await getFruit('peach') === '🍑') {
+    console.log('looks peachy!')
+  }
+}
+
+fruitInspection()
+```
 
 
 
