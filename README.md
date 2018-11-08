@@ -1667,6 +1667,19 @@ console.log(twitter, facebook); // logs the 2 variables
 
 Notice how we destructure `wes.links.social` and not just `wes`? That is important because we are destructuring a few levels deep.
 
+```js
+var first = someArray[0];
+var second = someArray[1];
+var third = someArray[2];
+```
+
+With destructuring assignment, the equivalent code becomes more concise and readable:
+
+```js
+var [first, second, third] = someArray;
+```
+
+
 
 
 
