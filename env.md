@@ -65,6 +65,7 @@ apps:
 ```
 
 Docker Compose likewise allows for an `environment` property to be specified in a service manifest:
+
 ```js
 version: "3"
 services:
@@ -77,6 +78,7 @@ services:
 ```
 
 Kubernetes has an equivalent `env` property in the pod template manifest which allows us to set the environment:
+
 ```js
 kind: Deployment
 apiVersion: extensions/v1beta1
