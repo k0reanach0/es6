@@ -53,7 +53,7 @@ At the infrastructure level, we can use deployment manager tools like PM2, Docke
 
 PM2 uses an `ecosystem.yaml` file where you can specify the environment using the `env` property:
 
-```js
+```yaml
 apps:
   - script: ./app.js
     name: 'my_application'
@@ -66,7 +66,7 @@ apps:
 
 Docker Compose likewise allows for an `environment` property to be specified in a service manifest:
 
-```js
+```yaml
 version: "3"
 services:
   my_application:
@@ -79,7 +79,7 @@ services:
 
 Kubernetes has an equivalent `env` property in the pod template manifest which allows us to set the environment:
 
-```js
+```yaml
 kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
