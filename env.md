@@ -19,7 +19,7 @@ let connectionString;
 if (runningLocally()) {
   connectionString = 'dev_user:dev_password@127.0.0.1:3306/schema';
 } else if (...) {
-  ...
+
 } else if (inProduction()) {
   connectionString = 'prd_user:prd_password@54.32.1.0:3306/schema';
 }
@@ -108,3 +108,5 @@ Some common ways that environments are used wrongly are:
 - Overusing `NODE_ENV` — we are taught by many tutorials out there to use `process.env.NODE_ENV` but not much more, resulting in the tendency to do if-else branches based on the value of `NODE_ENV`. This kinda kills the purpose of using environment variables.
 - Time sensitive information — if your application requires an SSL certificate/rotating password to communicate with another application deployed within the same server, it would be unwise to specify that as an environment variable. The injected environment represents the state of the environment at runtime and will remain static.
 - Configuring the timezone — Leon Bambrick said in 2010: “There are 2 hard problems in computer science: cache invalidation, naming things, and off-by-1 errors.” I’ll add another, timezones. When deploying with high availability, our application can be instantiated in multiple availability zones. One instance might be running in a fancy data centre in San Francisco and another in Singapore with our users coming from London. Transact in UTC and leave the timezone resolution to the client-side.
+
+Getting rid
