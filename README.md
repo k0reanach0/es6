@@ -1679,9 +1679,30 @@ With destructuring assignment, the equivalent code becomes more concise and read
 var [first, second, third] = someArray;
 ```
 
+Spaghetti API caller
+```
+fetch('https://myserver.co/endpoint.json', { method: 'get' })
+    .then(response => //do something)
 
+fetch('https://myserver.co/endpoint.json', { method: 'get' })
+    .then(response => //do something new)
 
+fetch('https://myserver.co/endpoint.json', { method: 'get' })
+    .then(response => //do something different)
+```
 
+Non-Spaghetti API caller
+```
+MyServer = MyServerAPI(); // this is probably a class
+var endpoint = 'https://myserver.co/endpoint.json'
+var response = MyServer.get(endpoint)
+var response = MyServer.get(endpoint)
+var response = MyServer.get(endpoint)
+```
+
+God functions...
+
+https://hackernoon.com/yubls-road-to-serverless-part-2-testing-and-ci-cd-72b2e583fe64
 
 
 
